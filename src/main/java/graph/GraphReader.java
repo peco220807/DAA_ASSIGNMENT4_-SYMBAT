@@ -5,12 +5,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 public class GraphReader {
     public static Graph readGraph(String filename) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         JsonNode root = mapper.readTree(new File(filename));
-
         boolean directed = root.get("directed").asBoolean();
         int n = root.get("n").asInt();
         Graph graph = new Graph(n, directed);
@@ -21,7 +19,6 @@ public class GraphReader {
             int w = edge.get("w").asInt();
             graph.addEdge(u, v, w);
         }
-
         return graph;
     }
 }
