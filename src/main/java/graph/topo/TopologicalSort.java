@@ -10,11 +10,7 @@ public class TopologicalSort {
     public List<Integer> sort() {
         int n = dag.size();
         int[] inDegree = new int[n];
-        for (int v = 0; v < n; v++) {
-            for (Edge e : dag.getAdj(v)) {
-                inDegree[e.to]++;
-            }
-        }
+        for (int v = 0; v < n; v++) for (Edge e : dag.getAdj(v)) inDegree[e.to]++;
         Queue<Integer> queue = new ArrayDeque<>();
         for (int i = 0; i < n; i++) if (inDegree[i] == 0) queue.add(i);
         List<Integer> order = new ArrayList<>();

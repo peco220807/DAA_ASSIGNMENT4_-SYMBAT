@@ -19,9 +19,7 @@ public class SCCTarjan {
     }
     public List<List<Integer>> findSCCs() {
         for (int v = 0; v < graph.size(); v++) {
-            if (indices[v] == -1) {
-                dfs(v);
-            }
+            if (indices[v] == -1) dfs(v);
         }
         return sccs;
     }
@@ -63,9 +61,7 @@ public class SCCTarjan {
             for (Edge e : graph.getAdj(v)) {
                 int uComp = nodeToSCC.get(v);
                 int vComp = nodeToSCC.get(e.to);
-                if (uComp != vComp) {
-                    dag.addEdge(uComp, vComp, 1); // вес 1 для конденсации
-                }
+                if (uComp != vComp) dag.addEdge(uComp, vComp, 1);
             }
         }
         return dag;

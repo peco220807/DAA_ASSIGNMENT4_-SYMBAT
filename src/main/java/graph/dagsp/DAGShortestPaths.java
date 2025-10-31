@@ -13,17 +13,11 @@ public class DAGShortestPaths {
         int n = dag.size();
         int[] dist = new int[n];
         Arrays.fill(dist, Integer.MAX_VALUE);
+        dist[source] = 0;
 
-        int[] topo = topologicalOrder();
-        for (int u : topo) {
-            if (dist[u] != Integer.MAX_VALUE) {
-                for (Edge e : dag.getAdj(u)) {
-                    if (dist[e.to] > dist[u] + e.weight) {
-                        dist[e.to] = dist[u] + e.weight;
-                    }
-                }
-            }
-        }
+        int[] topo = topoOrder();
+        for (int u : topo) if (dist[u] != Integer.MAX_VALUE) for (Edge e : dag.getAdj(u)) dist[e.to] = Math.min(dist[e.to], dist[u] + e.weight);
+
         return dist;
     }
     public int[] longestPaths() {
@@ -31,21 +25,16 @@ public class DAGShortestPaths {
         int[] dist = new int[n];
         Arrays.fill(dist, Integer.MIN_VALUE);
 
-        int[] topo = topologicalOrder();
+        int[] topo = topoOrder();
         for (int u : topo) {
             if (dist[u] == Integer.MIN_VALUE) dist[u] = 0;
-            for (Edge e : dag.getAdj(u)) {
-                if (dist[e.to] < dist[u] + e.weight) {
-                    dist[e.to] = dist[u] + e.weight;
-                }
-            }
+            for (Edge e : dag.getAdj(u)) dist[e.to] = Math.max(dist[e.to], dist[u] + e.weight);
         }
         return dist;
     }
-    private int[] topologicalOrder() {
+    private int[] topoOrder() {
         TopologicalSort topo = new TopologicalSort(dag);
         List<Integer> order = topo.sort();
         return order.stream().mapToInt(i -> i).toArray();
     }
 }
-

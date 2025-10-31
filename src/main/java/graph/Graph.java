@@ -15,11 +15,12 @@ public class Graph {
         adj[u].add(new Edge(u, v, w));
         if (!directed) adj[v].add(new Edge(v, u, w));
     }
-    public List<Edge> getAdj(int u) {
-        return adj[u];
-    }
     public int size() {
         return n;
     }
-}
 
+    public Edge[] getAdj(int v) {
+        return new Edge[0];
+    }
+
+}
